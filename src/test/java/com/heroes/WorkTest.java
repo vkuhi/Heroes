@@ -17,7 +17,6 @@ public class WorkTest extends BaseTest {
   private MapActions mapActions = new MapActions();
   private CharacterActions characterActions = new CharacterActions();
   private WorkActions workActions = new WorkActions();
-  private Captcha captcha;
 
   @AfterMethod
   public void tearDown() {
@@ -27,24 +26,51 @@ public class WorkTest extends BaseTest {
   @DataProvider(name = "Authentication")
   public static Object[][] credentials() {
     return new Object[][]{
-        {"Vkuhi", "Vk123456"},
-        {"darklle147", "qwerty147"}
+        {"olep", "qwerty147"},
+        {"kiril4ik", "qwerty147"},
+        {"heroespox", "qwerty147"},
+        {"Malish99", "qwerty147"},
+        {"Rubi", "qwerty147"},
+        {"Gorlik", "qwerty147"},
+        {"Lilak", "qwerty147"},
+        {"semavorop", "eVLy7IpTYXFB2io"},
+        {"sergunchikchik", "qwerty147"},
+        {"sergeylo777", "Ht9R7XpW4u8pfX"},
+        {"serzhkharit", "1je2w53rImaBexU"},
+        {"sofyadiv", "qPW5bqh7ZDQxJxF"},
+        {"oleghazan", "py8QbtqPWCSn1Xe"},
+        {"ritakach", "1PbkbUGIWpbpplE"},
+        {"donduko", "Au61A9hyCdgpU1R"},
+        {"tosyafili", "OIClSOgI9CtEZLX"},
+        {"rayaash", "dSaLW8Z50sE9cWp"},
+        {"Sosisozka", "LuBMYRNtz4jPSXs"},
+        {"valentin_kula", "sxePjyfn4QX8Qe7HRz"},
+        {"FedorSerov", "XoAY9BlB0P"},
+        {"polinamali", "4iosRvHH360m1wh"},
+        {"milagogol", "35vbANdqtN5FOGn"},
+        {"gert447", "grom1515"},
+        {"arinakoros", "CiEwnwcWtD6IKza"},
+        {"allamaly", "Ib4FPf7vDtpDWcF"},
+        {"andrejdor", "35vbANdqtN5FOGn"},
+        {"voroni", "tpkGEN59W8k8HeT"},
+        {"galagan", "KQfrQ7g2exKoKds"}
     };
   }
 
   @Test(dataProvider = "Authentication")
   public void work(String login, String password) throws Exception {
+    Captcha captcha;
     loginIntoAccount(login, password);
     do {
       headerActions.clickMap();
       mapActions.openFirstMiningWork();
-      workActions.pasteCaptcha(getCaptchaText()).clickSubmitButton();
+      captcha = new Captcha();
+      workActions.pasteCaptcha(getCaptchaText(captcha)).clickSubmitButton();
     } while (!workActions.isEnteredCaptchaCorrect(captcha));
   }
 
-  private String getCaptchaText() throws Exception {
+  private String getCaptchaText(Captcha captcha) throws Exception {
     File captchaImage = workActions.getCaptchaImage();
-    captcha = new Captcha();
     return captcha.getCaptchaText(captchaImage);
   }
 
